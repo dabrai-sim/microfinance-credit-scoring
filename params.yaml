@@ -4,8 +4,8 @@ preprocess:
 
 train:
   n_estimators: 300
-  max_depth: 25
-  min_samples_split: 6
+  max_depth: 12
+  min_samples_split: 8
   min_samples_leaf: 2
   max_features: log2
   random_state: 42
