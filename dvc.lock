@@ -67,22 +67,22 @@ stages:
       isexec: true
     params:
       params.yaml:
-        train.max_depth: 25
-        train.max_features: log2
+        train.max_depth: 17
+        train.max_features: 0.45
         train.min_samples_leaf: 2
-        train.min_samples_split: 6
-        train.n_estimators: 300
+        train.min_samples_split: 5
+        train.n_estimators: 210
         train.random_state: 42
     outs:
     - path: metrics/train_metrics.json
       hash: md5
-      md5: 865100210ef3e982f680660ff6d903c2
-      size: 180
+      md5: 455cde125bb1e90d7f581afc1e8729c5
+      size: 179
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: 3cf72eda9f6b259cae6f189122c4cc89
+      size: 192351513
       isexec: true
   evaluate:
     cmd: python src/models/evaluate.py
@@ -94,8 +94,8 @@ stages:
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: 3cf72eda9f6b259cae6f189122c4cc89
+      size: 192351513
       isexec: true
     - path: src/models/evaluate.py
       hash: md5
@@ -108,26 +108,26 @@ stages:
     outs:
     - path: metrics/test_metrics.json
       hash: md5
-      md5: 90a724fe4db1c148a51b9be907be5612
-      size: 183
+      md5: b4802b4613bc9fa68c6fc479ccde69c4
+      size: 182
       isexec: true
     - path: plots/confusion_matrix.png
       hash: md5
-      md5: 16d84fe676541c6ebaacea8ae4454285
-      size: 58352
+      md5: e3bbb609061d647f9c3a683faedbffad
+      size: 58932
       isexec: true
     - path: plots/precision_recall_curve.png
       hash: md5
-      md5: 5348c070dc807b6cefd67e8365b83ee9
-      size: 83853
+      md5: 4423103a771a434f9413dabc7357c933
+      size: 82303
       isexec: true
     - path: plots/prediction_distribution.png
       hash: md5
-      md5: 569ba04ba4502b4b0859b5caaa370618
-      size: 92852
+      md5: 6ad089a530666f31d7d646e95a88bd49
+      size: 103986
       isexec: true
     - path: plots/roc_curve.png
       hash: md5
-      md5: f7cc22e3f2183dd69870fe11ee833fad
-      size: 166409
+      md5: 886678b0f0bdeaa2fee5f26c07ae1a1a
+      size: 167127
       isexec: true
