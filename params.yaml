@@ -4,10 +4,10 @@ preprocess:
 
 train:
   n_estimators: 300
-  max_depth: 25
+  max_depth: 22
   min_samples_split: 6
   min_samples_leaf: 2
-  max_features: log2
+  max_features: sqrt
   random_state: 42
 
 evaluate:
