@@ -67,7 +67,7 @@ stages:
       isexec: true
     params:
       params.yaml:
-        train.max_depth: 25
+        train.max_depth: 10
         train.max_features: log2
         train.min_samples_leaf: 2
         train.min_samples_split: 6
@@ -76,13 +76,13 @@ stages:
     outs:
     - path: metrics/train_metrics.json
       hash: md5
-      md5: 865100210ef3e982f680660ff6d903c2
-      size: 180
+      md5: e83df36564e4a0e052f7865dbe7f82be
+      size: 181
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: b4137a85eda73e28bbebc138fca69fb8
+      size: 28872809
       isexec: true
   evaluate:
     cmd: python src/models/evaluate.py
@@ -94,8 +94,8 @@ stages:
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: b4137a85eda73e28bbebc138fca69fb8
+      size: 28872809
       isexec: true
     - path: src/models/evaluate.py
       hash: md5
@@ -108,26 +108,26 @@ stages:
     outs:
     - path: metrics/test_metrics.json
       hash: md5
-      md5: 90a724fe4db1c148a51b9be907be5612
-      size: 183
+      md5: fe59a60633d476f4da55f094c76c1110
+      size: 181
       isexec: true
     - path: plots/confusion_matrix.png
       hash: md5
-      md5: 16d84fe676541c6ebaacea8ae4454285
-      size: 58352
+      md5: e528cc43e53181bbb9863870fd71090b
+      size: 59852
       isexec: true
     - path: plots/precision_recall_curve.png
       hash: md5
-      md5: 5348c070dc807b6cefd67e8365b83ee9
-      size: 83853
+      md5: 2072ced7d7182db0abdfc8b740e0bd9f
+      size: 83488
       isexec: true
     - path: plots/prediction_distribution.png
       hash: md5
-      md5: 569ba04ba4502b4b0859b5caaa370618
-      size: 92852
+      md5: 8cbdcac95b23fdbe160b40b06b36812a
+      size: 95236
       isexec: true
     - path: plots/roc_curve.png
       hash: md5
-      md5: f7cc22e3f2183dd69870fe11ee833fad
-      size: 166409
+      md5: 7eaa26ee82b9011f2f62096798e5bde5
+      size: 166436
       isexec: true
