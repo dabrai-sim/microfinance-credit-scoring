@@ -68,21 +68,21 @@ stages:
     params:
       params.yaml:
         train.max_depth: 25
-        train.max_features: log2
+        train.max_features: 0.3
         train.min_samples_leaf: 2
         train.min_samples_split: 6
-        train.n_estimators: 300
+        train.n_estimators: 220
         train.random_state: 42
     outs:
     - path: metrics/train_metrics.json
       hash: md5
-      md5: 865100210ef3e982f680660ff6d903c2
+      md5: c57401631cf83d5bff18729dd6ce36fb
       size: 180
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: 262ec163fc6b201dd8d0c15369d92491
+      size: 416039353
       isexec: true
   evaluate:
     cmd: python src/models/evaluate.py
@@ -94,8 +94,8 @@ stages:
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: 262ec163fc6b201dd8d0c15369d92491
+      size: 416039353
       isexec: true
     - path: src/models/evaluate.py
       hash: md5
@@ -108,26 +108,26 @@ stages:
     outs:
     - path: metrics/test_metrics.json
       hash: md5
-      md5: 90a724fe4db1c148a51b9be907be5612
-      size: 183
+      md5: c390ce3bec1fbcfe7e08bf92fd13190d
+      size: 181
       isexec: true
     - path: plots/confusion_matrix.png
       hash: md5
-      md5: 16d84fe676541c6ebaacea8ae4454285
-      size: 58352
+      md5: 0c60e32a52a3c2dfae160df1314ee401
+      size: 59635
       isexec: true
     - path: plots/precision_recall_curve.png
       hash: md5
-      md5: 5348c070dc807b6cefd67e8365b83ee9
-      size: 83853
+      md5: bd51471f09034f23d569187dff9d2dd0
+      size: 83886
       isexec: true
     - path: plots/prediction_distribution.png
       hash: md5
-      md5: 569ba04ba4502b4b0859b5caaa370618
-      size: 92852
+      md5: 1ec96b696b457f25ac87e4e1c6b6f3b5
+      size: 96368
       isexec: true
     - path: plots/roc_curve.png
       hash: md5
-      md5: f7cc22e3f2183dd69870fe11ee833fad
-      size: 166409
+      md5: a8d08fb24790baec1c1c8ed7ea469170
+      size: 166717
       isexec: true
