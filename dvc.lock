@@ -67,22 +67,22 @@ stages:
       isexec: true
     params:
       params.yaml:
-        train.max_depth: 25
-        train.max_features: log2
+        train.max_depth: 18
+        train.max_features: 0.6
         train.min_samples_leaf: 2
         train.min_samples_split: 6
-        train.n_estimators: 300
+        train.n_estimators: 140
         train.random_state: 42
     outs:
     - path: metrics/train_metrics.json
       hash: md5
-      md5: 865100210ef3e982f680660ff6d903c2
-      size: 180
+      md5: a5f3d4b0f5880462e85a64f920b2072d
+      size: 178
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: e5d6464bf70557b0ef4f6ea0085d765b
+      size: 138323513
       isexec: true
   evaluate:
     cmd: python src/models/evaluate.py
@@ -94,8 +94,8 @@ stages:
       isexec: true
     - path: models/credit_model.pkl
       hash: md5
-      md5: 353b72428924be05973d06e0274cf6fe
-      size: 624549289
+      md5: e5d6464bf70557b0ef4f6ea0085d765b
+      size: 138323513
       isexec: true
     - path: src/models/evaluate.py
       hash: md5
@@ -108,26 +108,26 @@ stages:
     outs:
     - path: metrics/test_metrics.json
       hash: md5
-      md5: 90a724fe4db1c148a51b9be907be5612
-      size: 183
+      md5: caa7b1e3e99e2234e206efe9a5568acd
+      size: 181
       isexec: true
     - path: plots/confusion_matrix.png
       hash: md5
-      md5: 16d84fe676541c6ebaacea8ae4454285
-      size: 58352
+      md5: b69eb6777b8b2cb8f9c5e2cf41713f2c
+      size: 58936
       isexec: true
     - path: plots/precision_recall_curve.png
       hash: md5
-      md5: 5348c070dc807b6cefd67e8365b83ee9
-      size: 83853
+      md5: 430f3d664df7a48b598b5cf962ce56e0
+      size: 83721
       isexec: true
     - path: plots/prediction_distribution.png
       hash: md5
-      md5: 569ba04ba4502b4b0859b5caaa370618
-      size: 92852
+      md5: 0a814c57b05b7e7a0cc6989870def560
+      size: 89730
       isexec: true
     - path: plots/roc_curve.png
       hash: md5
-      md5: f7cc22e3f2183dd69870fe11ee833fad
-      size: 166409
+      md5: 54a7991ab70eea3a38384e6664829c85
+      size: 167023
       isexec: true
