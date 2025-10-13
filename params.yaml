@@ -3,11 +3,11 @@ preprocess:
   random_state: 42
 
 train:
-  n_estimators: 300
-  max_depth: 25
-  min_samples_split: 6
-  min_samples_leaf: 2
-  max_features: log2
+  n_estimators: 185
+  max_depth: 15
+  min_samples_split: 7
+  min_samples_leaf: 4
+  max_features: 0.65
   random_state: 42
 
 evaluate:
