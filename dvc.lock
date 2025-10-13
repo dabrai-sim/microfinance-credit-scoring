@@ -1,0 +1,133 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/data/load_data.py
+    deps:
+    - path: data/raw/application_train.csv
+      hash: md5
+      md5: 793a017f41fbac1dc28176b26dbab30e
+      size: 166133370
+      isexec: true
+    - path: src/data/load_data.py
+      hash: md5
+      md5: dbe6e469fd6c65f8337ce661e3c79424
+      size: 1395
+      isexec: true
+    outs:
+    - path: data/raw/home_credit_raw.csv
+      hash: md5
+      md5: a6d63fdce8d0dc089c03a1bfea35cedf
+      size: 165141285
+      isexec: true
+  preprocess:
+    cmd: python src/data/preprocess.py
+    deps:
+    - path: data/raw/home_credit_raw.csv
+      hash: md5
+      md5: a6d63fdce8d0dc089c03a1bfea35cedf
+      size: 165141285
+      isexec: true
+    - path: src/data/preprocess.py
+      hash: md5
+      md5: 34f66591d19f38e1831457cba034ecc7
+      size: 4665
+      isexec: true
+    params:
+      params.yaml:
+        preprocess.random_state: 42
+        preprocess.test_size: 0.2
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 075aa110440308737923624b7acf0ce1
+      size: 65321630
+      isexec: true
+    - path: data/processed/train.csv
+      hash: md5
+      md5: d3221d7352c4ec42100eb304ae60185e
+      size: 261275291
+      isexec: true
+    - path: models/scaler.pkl
+      hash: md5
+      md5: cf06577bbcf6dab7c05aeb5670cb8946
+      size: 3799
+      isexec: true
+  train:
+    cmd: python src/models/train.py
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: d3221d7352c4ec42100eb304ae60185e
+      size: 261275291
+      isexec: true
+    - path: src/models/train.py
+      hash: md5
+      md5: de27f15c7a65e786677b8b7e7b57eb8f
+      size: 4124
+      isexec: true
+    params:
+      params.yaml:
+        train.max_depth: 10
+        train.max_features: sqrt
+        train.min_samples_leaf: 1
+        train.min_samples_split: 5
+        train.n_estimators: 100
+        train.random_state: 42
+    outs:
+    - path: metrics/train_metrics.json
+      hash: md5
+      md5: 6f97f7ebeec5a998b0f96bc0aca595df
+      size: 181
+      isexec: true
+    - path: models/credit_model.pkl
+      hash: md5
+      md5: 9d31cbf85fa0c91c503aa7f19e48de2b
+      size: 10338569
+      isexec: true
+  evaluate:
+    cmd: python src/models/evaluate.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 075aa110440308737923624b7acf0ce1
+      size: 65321630
+      isexec: true
+    - path: models/credit_model.pkl
+      hash: md5
+      md5: 9d31cbf85fa0c91c503aa7f19e48de2b
+      size: 10338569
+      isexec: true
+    - path: src/models/evaluate.py
+      hash: md5
+      md5: 068ee13b3dbc96c5506e865624f50a78
+      size: 5286
+      isexec: true
+    params:
+      params.yaml:
+        evaluate.threshold: 0.5
+    outs:
+    - path: metrics/test_metrics.json
+      hash: md5
+      md5: 455b67ef86d58ea9543ea66cd227d817
+      size: 180
+      isexec: true
+    - path: plots/confusion_matrix.png
+      hash: md5
+      md5: 9a7c9686e2bb2c563972733fd2bcad0e
+      size: 60310
+      isexec: true
+    - path: plots/precision_recall_curve.png
+      hash: md5
+      md5: 7781461a170dc4a40b6700f00515d8d3
+      size: 83738
+      isexec: true
+    - path: plots/prediction_distribution.png
+      hash: md5
+      md5: 3849e76dcac3f5367fce460eb2d3c9d8
+      size: 91828
+      isexec: true
+    - path: plots/roc_curve.png
+      hash: md5
+      md5: 424b927aedc68a98a3ae3e2755f52207
+      size: 166513
+      isexec: true

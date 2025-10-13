@@ -1,0 +1,56 @@
+stages:
+  load_data:
+    cmd: python src/data/load_data.py
+    deps:
+      - src/data/load_data.py
+      - data/raw/application_train.csv
+    outs:
+      - data/raw/home_credit_raw.csv
+
+  preprocess:
+    cmd: python src/data/preprocess.py
+    deps:
+      - src/data/preprocess.py
+      - data/raw/home_credit_raw.csv
+    params:
+      - preprocess.test_size
+      - preprocess.random_state
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+      - models/scaler.pkl
+
+  train:
+    cmd: python src/models/train.py
+    deps:
+      - src/models/train.py
+      - data/processed/train.csv
+    params:
+      - train.n_estimators
+      - train.max_depth
+      - train.min_samples_split
+      - train.min_samples_leaf
+      - train.max_features
+      - train.random_state
+    outs:
+      - models/credit_model.pkl
+    metrics:
+      - metrics/train_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python src/models/evaluate.py
+    deps:
+      - src/models/evaluate.py
+      - data/processed/test.csv
+      - models/credit_model.pkl
+    params:
+      - evaluate.threshold
+    outs:
+      - plots/confusion_matrix.png
+      - plots/roc_curve.png
+      - plots/precision_recall_curve.png
+      - plots/prediction_distribution.png
+    metrics:
+      - metrics/test_metrics.json:
+          cache: false

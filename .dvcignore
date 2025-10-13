@@ -1,0 +1,9 @@
+# DVC ignore patterns
+__pycache__
+*.pyc
+.git
+.dvc
+.vscode
+.idea
+.pytest_cache
+mlruns

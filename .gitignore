@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+venv/
+env/
+
+# Conda
+*.conda
+.conda/
+
+# DVC - track pointers, not data
+/data/raw/*.csv
+/data/processed/*.csv
+/models/*.pkl
+/models/*.joblib
+
+# IDEs
+.vscode/
+.idea/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Experiment files
+experiments_comparison.csv
+experiments_visualization.png
+hyperparameter_correlation.png
+
+# Temporary files
+*.tmp
+*.swp
+
