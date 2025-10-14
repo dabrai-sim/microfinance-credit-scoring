@@ -43,7 +43,7 @@ Thumbs.db
 # Experiments
 experiments_*.csv
 experiments_*.png
-*.txt
+
 
 # Conda
 .conda/
