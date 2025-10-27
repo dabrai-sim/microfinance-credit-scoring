@@ -3,10 +3,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import joblib
 import pandas as pd
-import numpy as np
 from typing import Dict
 import json
-from pathlib import Path
 
 
 app = FastAPI(
@@ -14,7 +12,6 @@ app = FastAPI(
     description="API for predicting credit default risk",
     version="1.0.0"
 )
-
 # Load model and scaler
 MODEL_PATH = "models/credit_model.pkl"
 SCALER_PATH = "models/scaler.pkl"
@@ -24,6 +21,7 @@ try:
     model = joblib.load(MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
     print("Model and scaler loaded successfully!")
+
 except Exception as e:
     print(f"Warning: Could not load model or scaler: {e}")
     model = None
@@ -31,6 +29,7 @@ except Exception as e:
 
 
 class CreditApplication(BaseModel):
+
     amt_income_total: float = Field(..., description="Total income", gt=0)
     amt_credit: float = Field(..., description="Credit amount", gt=0)
     amt_annuity: float = Field(..., description="Loan annuity", gt=0)
@@ -41,7 +40,7 @@ class CreditApplication(BaseModel):
     cnt_fam_members: int = Field(default=1, description="Family size", ge=1)
     own_car: bool = Field(default=False, description="Owns car")
     own_realty: bool = Field(default=False, description="Owns realty")
-    
+
     class Config:
         schema_extra = {
             "example": {
@@ -103,7 +102,6 @@ def get_metrics():
 def predict_credit_risk(application: CreditApplication):
     if model is None or scaler is None:
         raise HTTPException(status_code=503, detail="Model not loaded")
-    
     try:
         features = {
             'AMT_INCOME_TOTAL': application.amt_income_total,
@@ -120,9 +118,7 @@ def predict_credit_risk(application: CreditApplication):
             'ANNUITY_INCOME_RATIO': application.amt_annuity / (application.amt_income_total + 1),
             'GOODS_CREDIT_RATIO': application.amt_goods_price / (application.amt_credit + 1),
         }
-        
         expected_features = scaler.feature_names_in_ if hasattr(scaler, 'feature_names_in_') else None
-        
         if expected_features is not None:
             feature_df = pd.DataFrame([features])
             for feat in expected_features:
@@ -131,10 +127,8 @@ def predict_credit_risk(application: CreditApplication):
             feature_df = feature_df[expected_features]
         else:
             feature_df = pd.DataFrame([features])
-        
         features_scaled = scaler.transform(feature_df)
         probability = float(model.predict_proba(features_scaled)[0, 1])
-        
         if probability < 0.3:
             risk_category = "Low"
             recommendation = "APPROVED - Low risk applicant"
@@ -144,14 +138,13 @@ def predict_credit_risk(application: CreditApplication):
         else:
             risk_category = "High"
             recommendation = "REJECTED - High risk applicant"
-        
         return PredictionResponse(
             default_probability=round(probability, 4),
             risk_category=risk_category,
             recommendation=recommendation,
             features_used=features
         )
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
@@ -159,4 +152,3 @@ def predict_credit_risk(application: CreditApplication):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-

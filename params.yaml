@@ -10,5 +10,3 @@ train:
   max_features: log2
   random_state: 42
 
-evaluate:
-  threshold: 0.5
