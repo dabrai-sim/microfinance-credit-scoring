@@ -55,7 +55,7 @@ jobs:
       continue-on-error: false
 
   # JOB 2: Build & Push Docker Image
-build:
+  build:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: test
@@ -127,7 +127,7 @@ build:
     name: Deploy to AWS EC2
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     
     steps:
     - name: Deploy to EC2 via SSH
@@ -181,4 +181,3 @@ build:
       run: |
         echo "✅ Deployment successful!"
         echo "API URL: http://${{ secrets.EC2_HOST }}:8000"
-
